@@ -19,7 +19,7 @@ const restartButton = document.querySelector('.restart-button');
 const retryButton = document.querySelector('.retry-button');
 const tileContainer = document.querySelector('.tile-container');
 const gameMessage = document.querySelector('.game-message');
-const messageText = document.querySelector('p');
+const messageText = gameMessage.querySelector('p');
 
 //----------------------------------------------------------------------------------//
 
@@ -154,3 +154,47 @@ function hideGameMessage()
 // START THE GAME WHEN THE PAGE LOADS.
 
 document.addEventListener('DOMContentLoaded', init_game);
+
+//----------------------------------------------------------------------------------//
+
+// TILE GENERATION //
+
+function addRandomTile()	// Add a random tile (2 or 4) to an empty cell
+{
+	const emptyCells = getEmptyCells();
+
+	if (emptyCells.length === 0)
+		return (false);
+
+	const randomIndex = Math.floor(Math.random() * emptyCells.length);	// Select a random empty cell
+	const {row ,col} = emptyCells[randomIndex];
+
+	let value;
+	if (Math.random() < 0.9) {
+		value = 2;
+	}
+	else
+	{
+		value = 4;
+	}
+	board[row][col] = value;
+
+	return (true);
+}
+
+function getEmptyCells()	// Get all empty cells (with value 0)
+{
+	const emptyCells = [];
+
+	for (let row = 0; row < GRID_SIZE; row++)
+	{
+		for (let col = 0; col < GRID_SIZE; col++)
+		{
+			if (board[row][col] === 0)
+			{
+				emptyCells.push({row, col});
+			}
+		}
+	}
+	return (emptyCells);
+}
