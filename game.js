@@ -127,3 +127,16 @@ function saveBestScore()	// Save the best score
 {
 		localStorage.setItem('2048-best-score', bestScore);
 }
+
+// GAME MESSAGES //
+
+function showGameMessage(message)	// Displays the game over message
+{
+	messageText.textContent = message;	// Set the message text
+	gameMessage.style.display = 'flex';	// Display the message container
+}
+
+function hideGameMessage()
+{
+	gameMessage.style.display = 'none';	// Hide the message container
+}
