@@ -21,6 +21,8 @@ const tileContainer = document.querySelector('.tile-container');
 const gameMessage = document.querySelector('.game-message');
 const messageText = document.querySelector('p');
 
+//----------------------------------------------------------------------------------//
+
 // GAME INTRODUCTION //
 
 function init_game()	//  Initialize the game when loading the page
@@ -63,6 +65,8 @@ function createEmptyBoard()
 	return (newBoard);
 }
 
+//----------------------------------------------------------------------------------//
+
 // EVENT LISTENERS //
 
 restartButton.addEventListener('click', newGame);	// Restart button
@@ -94,6 +98,8 @@ function handleKeyPress(event)	// event --> keyboard event
 	}
 }
 
+//----------------------------------------------------------------------------------//
+
 // SCORE MANAGEMENT //
 
 function updateScore()	// Update Score
@@ -114,7 +120,7 @@ function loadBestScore()	// Load the best score from localStorage
 
 	if (saved !== null)
 	{
-		bestScore = parseInt(saved, 10); // If it exists, convert it to a number and assign it to bestScore
+		bestScore = parseInt(saved, 10); // If it exists, convert it to a number
 	}
 	else
 	{
@@ -128,6 +134,8 @@ function saveBestScore()	// Save the best score
 		localStorage.setItem('2048-best-score', bestScore);
 }
 
+//----------------------------------------------------------------------------------//
+
 // GAME MESSAGES //
 
 function showGameMessage(message)	// Displays the game over message
@@ -140,3 +148,9 @@ function hideGameMessage()
 {
 	gameMessage.style.display = 'none';	// Hide the message container
 }
+
+//----------------------------------------------------------------------------------//
+
+// START THE GAME WHEN THE PAGE LOADS.
+
+document.addEventListener('DOMContentLoaded', init_game);
