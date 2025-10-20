@@ -198,3 +198,53 @@ function getEmptyCells()	// Get all empty cells (with value 0)
 	}
 	return (emptyCells);
 }
+
+//----------------------------------------------------------------------------------//
+
+// BOARD RENDERING //
+
+function renderBoard() // Render all tiles on the board
+{
+	tileContainer.innerHTML = '';	// Clear the tile container
+
+	for (let row = 0; row < GRID_SIZE; row++)	// Iterate through the board and create tiles
+	{
+		for (let col = 0; col < GRID_SIZE; col++)
+		{
+			const value = board[row][col];
+			
+			if (value !== 0)	// Only render if there's a tile
+			{
+				createTileElement(value, row, col);
+			}
+		}
+	}
+}
+
+function createTileElement(value, row, col)	// Create a tile element visually
+{
+	// Create the tile div
+	const tile = document.createElement('div');
+	tile.classList.add('tile');
+	tile.classList.add(`tile-${value}`);
+	tile.textContent = value;
+	
+	// Calculate position (each cell is 90px: 80px + 10px margin)
+	const position = getTilePosition(row, col);
+	tile.style.left = position.x + 'px';
+	tile.style.top = position.y + 'px';
+	
+	// Add to container
+	tileContainer.appendChild(tile);
+}
+
+function getTilePosition(row, col)	// Calculate pixel position of a tile
+{
+	// Each cell: 80px width + 5px margin on each side = 90px total
+	const cellSize = 90;
+	
+	return {
+		x: col * cellSize + 5, // +5 for initial margin
+		y: row * cellSize + 5
+	};
+}
