@@ -244,8 +244,10 @@ function getTilePosition(row, col)	// Calculate pixel position of a tile
 	const cellSize = 80;
 	const margin = 5;
 	
-	return {
-		x: col * (cellSize + margin * 2) + margin,
-		y: row * (cellSize + margin * 2) + margin
-	};
+	const x = col * (cellSize + margin * 2) + margin;
+	const y = row * (cellSize + margin * 2) + margin;
+
+	return { x: x, y: y };
 }
+
+//----------------------------------------------------------------------------------//
