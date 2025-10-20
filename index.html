@@ -6,6 +6,7 @@
 	<title>2048 Game</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 	<div class="game-container">
 		<!-- Header with title and points -->
@@ -16,52 +17,62 @@
 					<div class="score-title">Score</div>
 					<div id="score">0</div>
 				</div>
-			<div class="score-container">
-				<div class="score-title">Best</div>
-				<div class="best-score">0</div>
+				<div class="score-container">
+					<div class="score-title">Best</div>
+					<div class="best-score">0</div>
+				</div>
 			</div>
 		</div>
+
+		<!-- Subtitle and new game button -->
+		<div class="above-game">
+			<p class="game-intro">Put the numbers together until you get <strong>2048 in a box!</strong></p>
+			<button class="restart-button">New Game</button>
+		</div>
+
+		<!-- Background Grid -->
+		<div class="grid-container">
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+			<div class="grid-row">
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+				<div class="grid-cell"></div>
+			</div>
+		</div>
+		<!-- Tile container (will be generated dynamically) -->
+		<div class="tile-container">
+		</div>
+
+		<!-- Game Over Message -->
+		<div class="game-message">
+			<p></p>
+			<button class="retry-button">Try again!</button>
+		</div>
+
+		<!-- Instructions -->
+		<p class="game-explanation">
+			<strong class="important">HOW TO PLAY:</strong> Use <strong>the arrow keys</strong> to move the squares.
+			When you connect two squares with the same number, their values will add up to a single square.
+		</p>
 	</div>
-
- <!-- Subtitle and new game button -->
-<div class="above-game">
-	<p class="game-intro">Put the numbers together until you get <strong>2048 in a box!</strong></p>
-	<button class="restart-button">New Game</button>
-</div>
-
-<!-- Game Container-->
-<div class="game-container">
-	<!-- Background Grid -->
-	 <div class="grid-container">
-		<div class="grid-row">
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-		</div>
-		<div class="grid-row">
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-		</div>
-		<div class="grid-row">
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-		</div>
-		<div class="grid-row">
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-			<div class="grid-cell"></div>
-		</div>
-	</div>
-	 <!-- Tile container - (will be generated dynamically) -->
-	<div class="title-container">
-
-
-	</div>
-</div>
-
+	<script src="script.js"></script>
+</body>
+</html>
