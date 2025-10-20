@@ -28,7 +28,6 @@ const messageText = gameMessage.querySelector('p');
 function init_game()	//  Initialize the game when loading the page
 {
 	loadBestScore();	// Load best score from localStorage
-	setupEventListeners();	// Configure event listeners
 	newGame();	// Start Game
 }
 
@@ -296,23 +295,30 @@ function move(direction)	// Main function to handle movement
 		}
 	}
 	else if (direction === 'down')
+{
+	for (let col = 0; col < GRID_SIZE; col++)
 	{
-		for (let col = 0; col < GRID_SIZE; col++)
+		// Extract the column
+		let column = [];
+		for (let row = 0; row < GRID_SIZE; row++)
 		{
-			let column = [];
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				column.push(board[row][col]);
-			}
-			let reversedColumn = column.reverse();
-			let newColumn = slide(reversedColumn);
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				newBoard[row][col] = newColumn.row.reverse()[row];
-			}
-			if (newColumn.moved) moved = true;
+			column.push(board[row][col]);
 		}
+		
+		// Reverse, slide, and reverse back
+		let reversedColumn = column.reverse();
+		let newColumn = slide(reversedColumn);
+		let finalColumn = newColumn.row.reverse();
+		
+		// Put the column back into the board
+		for (let row = 0; row < GRID_SIZE; row++)
+		{
+			newBoard[row][col] = finalColumn[row];
+		}
+		
+		if (newColumn.moved) moved = true;
 	}
+}
 
 	if (moved)	// If something moved, update the board
 	{
