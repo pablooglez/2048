@@ -79,22 +79,22 @@ function handleKeyPress(event)	// event --> keyboard event
 	if (event.key == 'ArrowUp')
 	{
 		event.preventDefault();
-		console.log('Key pressed: Up');
+		move('up');
 	}
 	else if (event.key == 'ArrowDown')
 	{
 		event.preventDefault();
-		console.log('Key pressed: Down');
+		move('down');
 	}
 	else if (event.key == 'ArrowLeft')
 	{
 		event.preventDefault();
-		console.log('Key pressed: Left');
+		move('left');
 	}
 	else if (event.key == 'ArrowRight')
 	{
 		event.preventDefault();
-		console.log('Key pressed: Right');
+		move('right');
 	}
 }
 
