@@ -251,3 +251,123 @@ function getTilePosition(row, col)	// Calculate pixel position of a tile
 }
 
 //----------------------------------------------------------------------------------//
+
+// MOVEMENT LOGIC //
+
+function move(direction)	// Main function to handle movement
+{
+	let moved = false;
+	let newBoard = JSON.parse(JSON.stringify(board));	// Deep copy of the board
+	
+	if (direction === 'left')
+	{
+		for (let row = 0; row < GRID_SIZE; row++)
+		{
+			let newRow = slide(board[row]);
+			newBoard[row] = newRow.row;
+			if (newRow.moved) moved = true;
+		}
+	}
+	else if (direction === 'right')
+	{
+		for (let row = 0; row < GRID_SIZE; row++)
+		{
+			let reversedRow = board[row].slice().reverse();
+			let newRow = slide(reversedRow);
+			newBoard[row] = newRow.row.reverse();
+			if (newRow.moved) moved = true;
+		}
+	}
+	else if (direction === 'up')
+	{
+		for (let col = 0; col < GRID_SIZE; col++)
+		{
+			let column = [];
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				column.push(board[row][col]);
+			}
+			let newColumn = slide(column);
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				newBoard[row][col] = newColumn.row[row];
+			}
+			if (newColumn.moved) moved = true;
+		}
+	}
+	else if (direction === 'down')
+	{
+		for (let col = 0; col < GRID_SIZE; col++)
+		{
+			let column = [];
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				column.push(board[row][col]);
+			}
+			let reversedColumn = column.reverse();
+			let newColumn = slide(reversedColumn);
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				newBoard[row][col] = newColumn.row.reverse()[row];
+			}
+			if (newColumn.moved) moved = true;
+		}
+	}
+
+	if (moved)	// If something moved, update the board
+	{
+		board = newBoard;
+		addRandomTile();
+		renderBoard();
+		updateScore();
+
+		if (checkWin())	// Check win/lose conditions
+		{
+			showGameMessage('You Win!');
+		}
+		else if (checkGameOver())
+		{
+			showGameMessage('Game Over!');
+		}
+	}
+}
+
+function slide(row)	// Slide and merge a single row/column
+{
+	let arr = row.filter(val => val !== 0);	// Remove zeros
+	let moved = false;
+
+	for (let i = 0; i < arr.length - 1; i++)	// Merge equal adjacent tiles
+	{
+		if (arr[i] === arr[i + 1])
+		{
+			arr[i] *= 2;		// Double the value
+			score += arr[i];	// Add to score
+			arr[i + 1] = 0;		// Mark as merged
+			moved = true;
+		}
+	}
+
+	arr = arr.filter(val => val !== 0);	// Remove zeros again after merging
+
+	if (arr.length !== row.filter(val => val !== 0).length)	// Check if the row changed
+	{
+		moved = true;
+	}
+
+	while (arr.length < GRID_SIZE)	// Fill with zeros to maintain size 4
+	{
+		arr.push(0);
+	}
+
+	for (let i = 0; i < GRID_SIZE; i++)	// Check if the row actually changed
+	{
+		if (row[i] !== arr[i])
+		{
+			moved = true;
+			break;
+		}
+	}
+
+	return { row: arr, moved: moved };
+}
