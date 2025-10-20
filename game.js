@@ -93,3 +93,37 @@ function handleKeyPress(event)	// event --> keyboard event
 		console.log('Key pressed: Right');
 	}
 }
+
+// SCORE MANAGEMENT //
+
+function updateScore()	// Update Score
+{
+	scoreDisplay.textContent = score;
+
+	if (score > bestScore)	// Update better score if necessary
+	{
+		bestScore = score;
+		bestScoreDisplay.textContent = bestScore;
+		saveBestScore();
+	}
+}
+
+function loadBestScore()	// Load the best score from localStorage
+{
+	const saved = localStorage.getItem('2048-best-score');
+
+	if (saved !== null)
+	{
+		bestScore = parseInt(saved, 10); // If it exists, convert it to a number and assign it to bestScore
+	}
+	else
+	{
+		bestScore = 0; // If it does not exist, initialize bestScore to 0.
+	}
+	bestScoreDisplay.textContent = bestScore
+}
+
+function saveBestScore()	// Save the best score
+{
+		localStorage.setItem('2048-best-score', bestScore);
+}
