@@ -62,3 +62,34 @@ function createEmptyBoard()
 	}
 	return (newBoard);
 }
+
+// EVENT LISTENERS //
+
+restartButton.addEventListener('click', newGame);	// Restart button
+retryButton.addEventListener('click', newGame);		// Retry button
+
+document.addEventListener('keydown', handleKeyPress);	// Arrow keys
+
+function handleKeyPress(event)	// event --> keyboard event
+{
+	if (event.key == 'ArrowUp')
+	{
+		event.preventDefault();
+		console.log('Key pressed: Up');
+	}
+	else if (event.key == 'ArrowDown')
+	{
+		event.preventDefault();
+		console.log('Key pressed: Down');
+	}
+	else if (event.key == 'ArrowLeft')
+	{
+		event.preventDefault();
+		console.log('Key pressed: Left');
+	}
+	else if (event.key == 'ArrowRight')
+	{
+		event.preventDefault();
+		console.log('Key pressed: Right');
+	}
+}
