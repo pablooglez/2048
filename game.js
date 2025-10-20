@@ -371,3 +371,54 @@ function slide(row)	// Slide and merge a single row/column
 
 	return { row: arr, moved: moved };
 }
+
+//----------------------------------------------------------------------------------//
+
+// WIN/LOSE CONDITIONS //
+
+function checkWin()	// Check if player reached 2048
+{
+	for (let row = 0; row < GRID_SIZE; row++)
+	{
+		for (let col = 0; col < GRID_SIZE; col++)
+		{
+			if (board[row][col] === 2048)
+			{
+				return (true);
+			}
+		}
+	}
+	return (false);
+}
+
+function checkGameOver()	// Check if no more moves are possible
+{
+	if (getEmptyCells().length > 0)	// Check if there are empty cells
+	{
+		return false;
+	}
+
+	for (let row = 0; row < GRID_SIZE; row++)	// Check if there are adjacent equal tiles (horizontal)
+	{
+		for (let col = 0; col < GRID_SIZE - 1; col++)
+		{
+			if (board[row][col] === board[row][col + 1])
+			{
+				return (false);
+			}
+		}
+	}
+
+	for (let col = 0; col < GRID_SIZE; col++)	// Check if there are adjacent equal tiles (vertical)
+	{
+		for (let row = 0; row < GRID_SIZE - 1; row++)
+		{
+			if (board[row][col] === board[row + 1][col])
+			{
+				return (false);
+			}
+		}
+	}
+	
+	return (true);	// No moves available
+}
