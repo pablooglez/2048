@@ -240,11 +240,12 @@ function createTileElement(value, row, col)	// Create a tile element visually
 
 function getTilePosition(row, col)	// Calculate pixel position of a tile
 {
-	// Each cell: 80px width + 5px margin on each side = 90px total
-	const cellSize = 90;
+	// Each cell: 80px + 10px margin (5px each side)
+	const cellSize = 80;
+	const margin = 5;
 	
 	return {
-		x: col * cellSize + 5, // +5 for initial margin
-		y: row * cellSize + 5
+		x: col * (cellSize + margin * 2) + margin,
+		y: row * (cellSize + margin * 2) + margin
 	};
 }
