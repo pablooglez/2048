@@ -12,6 +12,10 @@ let bestScore = 0;
 // Board size //
 const GRID_SIZE = 4;
 
+// GLOBAL VARIABLES FOR ANIMATIONS //
+let isAnimating = false;
+let nextTileId = 0;
+
 // References to DOM elements //
 const scoreDisplay = document.getElementById('score');
 const bestScoreDisplay = document.getElementById('best-score');
