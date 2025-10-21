@@ -236,7 +236,7 @@ function createTileElement(value, row, col, isNew = false)	// Create a tile elem
 	tile.classList.add('tile');
 	tile.classList.add(`tile-${value}`);
 	tile.textContent = value;
-	title.setAttribute('data-tile-id', nextTileId++);
+	tile.setAttribute('data-tile-id', nextTileId++);
 	
 	// Calculate position (each cell is 90px: 80px + 10px margin)
 	const position = getTilePosition(row, col);
@@ -265,7 +265,7 @@ function getTilePosition(row, col)	// Calculate pixel position of a tile
 	return { x: x, y: y };
 }
 
-function renderBoardAnimated(previousBoard, newBoard, direction)
+/*function renderBoardAnimated(previousBoard, newBoard, direction)
 {
 	const existingTiles = new Map();	// Create a map of existing tiles
 
@@ -300,9 +300,9 @@ function renderBoardAnimated(previousBoard, newBoard, direction)
 		renderBoard();
 		isAnimating = false;
 	}, 150);
-}
+}*/
 
-function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find the new position of a tile
+/*function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find the new position of a tile
 {
 	for (let row = 0; row < GRID_SIZE; row++)
 	{
@@ -315,9 +315,9 @@ function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find
 		}
 	}
 	return (null);
-}
+}*/
 
-function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// Animate tile movement
+/*function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// Animate tile movement
 {
 	const fromPos = getTilePosition(fromRow, fromCol);
 	const toPos = getTilePosition(toRow, toCol);
@@ -334,7 +334,7 @@ function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// A
 			tile.style.top = toPos.y + 'px';
 		}
 	});
-}
+}*/
 
 //----------------------------------------------------------------------------------//
 
@@ -345,7 +345,6 @@ function move(direction)	// Main function to handle movement
 	if (isAnimating) return;
 
 	let moved = false;
-	const previousBoard = JSON.parse(JSON.stringify(board));	// Save previous status
 	let newBoard = JSON.parse(JSON.stringify(board));	// Deep copy of the board
 	
 	if (direction === 'left')
@@ -385,43 +384,38 @@ function move(direction)	// Main function to handle movement
 		}
 	}
 	else if (direction === 'down')
-{
-	for (let col = 0; col < GRID_SIZE; col++)
 	{
-		// Extract the column
-		let column = [];
-		for (let row = 0; row < GRID_SIZE; row++)
+		for (let col = 0; col < GRID_SIZE; col++)
 		{
-			column.push(board[row][col]);
+			let column = [];
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				column.push(board[row][col]);
+			}
+			
+			let reversedColumn = column.reverse();
+			let newColumn = slide(reversedColumn);
+			let finalColumn = newColumn.row.reverse();
+			
+			for (let row = 0; row < GRID_SIZE; row++)
+			{
+				newBoard[row][col] = finalColumn[row];
+			}
+			
+			if (newColumn.moved) moved = true;
 		}
-		
-		// Reverse, slide, and reverse back
-		let reversedColumn = column.reverse();
-		let newColumn = slide(reversedColumn);
-		let finalColumn = newColumn.row.reverse();
-		
-		// Put the column back into the board
-		for (let row = 0; row < GRID_SIZE; row++)
-		{
-			newBoard[row][col] = finalColumn[row];
-		}
-		
-		if (newColumn.moved) moved = true;
 	}
-}
 
 	if (moved)	// If something moved, update the board
 	{
-		isAnimating = true;
 		board = newBoard;
-
-		renderBoardAnimated(previousBoard, newBoard, direction);	// Use animated rendering
+		updateScore();
+		renderBoard();
 		
-		setTimeout(() =>	// Add new tile after animation
+		// Add new tile after a short delay
+		setTimeout(() =>
 		{
 			addRandomTile();
-			renderBoard();
-			updateScore();
 
 			if (checkWin())
 			{
@@ -431,7 +425,7 @@ function move(direction)	// Main function to handle movement
 			{
 				showGameMessage('Game Over!');
 			}
-		}, 150);
+		}, 100);
 	}
 }
 
