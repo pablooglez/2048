@@ -13,6 +13,8 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ---
 
+![Game Start]([https://user-images.githubusercontent.com/usuario/imagen.png](https://github.com/pablooglez/2048/issues/2#issue-3536222825))
+
 ## 🎯 How to Play
 
 1. Use the **arrow keys** on your keyboard to move tiles
