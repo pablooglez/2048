@@ -125,7 +125,7 @@ function loadBestScore()	// Load the best score from localStorage
 	{
 		bestScore = 0; // If it does not exist, initialize bestScore to 0.
 	}
-	bestScoreDisplay.textContent = bestScore
+	bestScoreDisplay.textContent = bestScore;
 }
 
 function saveBestScore()	// Save the best score
