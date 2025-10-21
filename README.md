@@ -23,19 +23,6 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ---
 
-## ✨ Features
-
-- ✅ Smooth tile movement in all four directions
-- ✅ Tile merging with score calculation
-- ✅ Best score tracking (saved in browser localStorage)
-- ✅ Win detection (reaching 2048)
-- ✅ Game over detection (no moves available)
-- ✅ Responsive design
-- ✅ Clean and intuitive user interface
-- ✅ New Game functionality
-
----
-
 ## 🚀 Installation
 
 ### Clone the Repository
