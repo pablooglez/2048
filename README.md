@@ -14,6 +14,7 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 ---
 
 ![Game Start](https://github.com/user-attachments/assets/7fff35f7-8f81-451d-a343-d6225f990d70)
+*Screenshot of the 2048 game in action*
 
 ## 🎯 How to Play
 
@@ -25,19 +26,25 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ---
 
+## ✨ Features
+
+- 🎮 Classic 2048 gameplay mechanics
+- 📱 Responsive design
+- 💾 Best score persistence
+- 🎨 Beautiful forest-themed UI
+- ⌨️ Keyboard controls
+- 🔄 Restart functionality
+
+---
+
 ## 🚀 Installation
 
-### Clone the Repository
-```bash
-# Clone this repository
-git clone <your-repository-url>
+### Quick Start
+1. Clone this repository or download the ZIP file
+2. Open `index.html` in any modern web browser
+3. Start playing!
 
-# Navigate to the project directory
-cd 2048-game
-
-# Open index.html in your browser
-open index.html
-```
+**No server or build process required!**
 
 ---
 
@@ -90,7 +97,7 @@ Combine tiles with the same number until you create a tile with the value **2048
 | `⬇️ Arrow Down` | Move tiles down |
 | `⬅️ Arrow Left` | Move tiles left |
 | `➡️ Arrow Right` | Move tiles right |
-| `New Game Button` | Restart the game |
+| `Restart Button` | Restart the game |
 
 ---
 
