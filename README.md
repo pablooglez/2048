@@ -14,7 +14,7 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 ---
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7fff35f7-8f81-451d-a343-d6225f990d70" alt="Game Start" width="350">
+  <img src="https://github.com/user-attachments/assets/7fff35f7-8f81-451d-a343-d6225f990d70" alt="Game Start" width="450">
   <br>
   <em>Screenshot of the 2048 game in action</em>
 </div>
