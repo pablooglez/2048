@@ -337,7 +337,10 @@ function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// A
 
 function move(direction)	// Main function to handle movement
 {
+	if (isAnimating) return;
+
 	let moved = false;
+	const previousBoard = JSON.parse(JSON.stringify(board));	// Save previous status
 	let newBoard = JSON.parse(JSON.stringify(board));	// Deep copy of the board
 	
 	if (direction === 'left')
@@ -404,19 +407,26 @@ function move(direction)	// Main function to handle movement
 
 	if (moved)	// If something moved, update the board
 	{
+		isAnimating = true;
 		board = newBoard;
-		addRandomTile();
-		renderBoard();
-		updateScore();
 
-		if (checkWin())	// Check win/lose conditions
+		renderBoardAnimated(previousBoard, newBoard, direction);	// Use animated rendering
+		
+		setTimeout(() =>	// Add new tile after animation
 		{
-			showGameMessage('You Win!');
-		}
-		else if (checkGameOver())
-		{
-			showGameMessage('Game Over!');
-		}
+			addRandomTile();
+			renderBoard();
+			updateScore();
+
+			if (checkWin())
+			{
+				showGameMessage('You Win!');
+			}
+			else if (checkGameOver())
+			{
+				showGameMessage('Game Over!');
+			}
+		}, 150);
 	}
 }
 
