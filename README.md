@@ -38,7 +38,7 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ## 🚀 Installation
 
-### Option 1: Clone the Repository
+### Clone the Repository
 ```bash
 # Clone this repository
 git clone <your-repository-url>
