@@ -312,6 +312,25 @@ function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find
 	return (null);
 }
 
+function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// Animate tile movement
+{
+	const fromPos = getTilePosition(fromRow, fromCol);
+	const toPos = getTilePosition(toRow, toCol);
+
+	// Find the corresponding tile and animate it
+	existingTiles.forEach(tile => {
+		const currentLeft = parseInt(tile.style.left);
+		const currentTop = parseInt(tile.style.top);
+
+		if (currentLeft === fromPos.x && currentTop === fromPos.y)
+		{
+			tile.style.transition = 'all 0.15s ease-in-out';
+			tile.style.left = toPos.x + 'px';
+			tile.style.top = toPos.y + 'px';
+		}
+	});
+}
+
 //----------------------------------------------------------------------------------//
 
 // MOVEMENT LOGIC //
