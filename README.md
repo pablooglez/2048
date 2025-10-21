@@ -91,29 +91,6 @@ Combine tiles with the same number until you create a tile with the value **2048
 ├── game.js             # Game logic and functionality
 └── README.md           # Project documentation
 ```
-
-### File Descriptions
-
-**index.html**
-- Contains the game container structure
-- Grid layout (4x4)
-- Score display elements
-- Game over modal
-
-**styles.css**
-- Grid and tile styling
-- Color scheme for different tile values
-- Responsive design rules
-- Animations and transitions
-
-**game.js**
-- Game initialization
-- Movement logic (up, down, left, right)
-- Tile merging algorithm
-- Score management
-- Win/lose condition checking
-- localStorage integration
-
 ---
 
 ## 🎮 Controls
@@ -143,19 +120,6 @@ The core of the game is the `slide()` function, which:
 
 - **Left/Right**: Directly processes rows
 - **Up/Down**: Extracts columns, processes them as rows, then puts them back
-
----
-
-## 📝 Development Notes
-
-### Key Learning Points
-
-1. **Matrix manipulation**: Working with 2D arrays for game state
-2. **Event handling**: Keyboard input detection and prevention of default behavior
-3. **DOM manipulation**: Dynamic creation and positioning of elements
-4. **Algorithm design**: Implementing the slide-and-merge logic
-5. **State management**: Tracking game state without a framework
-6. **localStorage**: Persisting data between sessions
 
 ---
 
