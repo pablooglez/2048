@@ -224,21 +224,28 @@ function renderBoard() // Render all tiles on the board
 	}
 }
 
-function createTileElement(value, row, col)	// Create a tile element visually
+function createTileElement(value, row, col, isNew = false)	// Create a tile element visually
 {
 	// Create the tile div
 	const tile = document.createElement('div');
 	tile.classList.add('tile');
 	tile.classList.add(`tile-${value}`);
 	tile.textContent = value;
+	title.setAttribute('data-tile-id', nextTileId++);
 	
 	// Calculate position (each cell is 90px: 80px + 10px margin)
 	const position = getTilePosition(row, col);
 	tile.style.left = position.x + 'px';
 	tile.style.top = position.y + 'px';
+
+	if (isNew)	// Animation for new tiles
+	{
+		tile.classList.add('tile-new');
+	}
 	
 	// Add to container
 	tileContainer.appendChild(tile);
+	return (tile);
 }
 
 function getTilePosition(row, col)	// Calculate pixel position of a tile
