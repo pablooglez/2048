@@ -13,7 +13,7 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ---
 
-![Game Start]([https://user-images.githubusercontent.com/usuario/imagen.png](https://github.com/pablooglez/2048/issues/2#issue-3536222825))
+![Game Start](https://github.com/user-attachments/assets/7fff35f7-8f81-451d-a343-d6225f990d70)
 
 ## 🎯 How to Play
 
