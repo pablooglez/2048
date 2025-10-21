@@ -260,6 +260,37 @@ function getTilePosition(row, col)	// Calculate pixel position of a tile
 	return { x: x, y: y };
 }
 
+function renderBoardAnimated(previousBoard, newBoard, direction)
+{
+	const existingTiles = new Map();	// Create a map of existing tiles
+
+	const tiles = tileContainer.querySelectorAll('.tile');
+
+	tiles.forEach(tile => {
+		const id = tile.getAttribute('data-tile-id');
+		existingTiles.set(id, tile);
+	});
+
+	for (let row = 0; row < GRID_SIZE; row++)	// Animate existing tiles to their new positions
+		{
+			for (let col = 0; col < GRID_SIZE; col++)
+			{
+				const oldValue = previousBoard[row][col];
+				const newValue = newBoard[row][col];
+
+				if (oldValue !== 0)
+				{
+					const newPosition = findTileNewPosition(oldValue, row, col, newBoard, direction);	// Find where this tile ended
+
+					if (newPosition)
+					{
+						animateTileMovement(row, col, newPosition.row, newPosition.col, existingTiles);
+					}
+				}
+			}
+		}
+}
+
 //----------------------------------------------------------------------------------//
 
 // MOVEMENT LOGIC //
