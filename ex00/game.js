@@ -289,6 +289,12 @@ function renderBoardAnimated(previousBoard, newBoard, direction)
 				}
 			}
 		}
+
+		//After the animations, render the final state.
+		setTimeout(() => {
+		renderBoard();
+		isAnimating = false;
+	}, 150);
 }
 
 //----------------------------------------------------------------------------------//
