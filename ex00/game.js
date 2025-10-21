@@ -182,6 +182,11 @@ function addRandomTile()	// Add a random tile (2 or 4) to an empty cell
 	}
 	board[row][col] = value;
 
+	// Create the tile with appearance animation
+	setTimeout(() => {
+		createTileElement(value, row, col, true);
+	}, 50);
+
 	return (true);
 }
 
