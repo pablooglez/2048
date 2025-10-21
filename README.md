@@ -29,17 +29,6 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 
 ---
 
-## ✨ Features
-
-- 🎮 Classic 2048 gameplay mechanics
-- 📱 Responsive design
-- 💾 Best score persistence
-- 🎨 Beautiful forest-themed UI
-- ⌨️ Keyboard controls
-- 🔄 Restart functionality
-
----
-
 ## 🚀 Installation
 
 ### Quick Start
