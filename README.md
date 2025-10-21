@@ -7,20 +7,6 @@ A browser-based implementation of the classic 2048 puzzle game built with vanill
 ![HTML5](https://img.shields.io/badge/HTML-5-orange)
 ![CSS3](https://img.shields.io/badge/CSS-3-blue)
 
-## 📋 Table of Contents
-
-- [About](#about)
-- [How to Play](#how-to-play)
-- [Features](#features)
-- [Installation](#installation)
-- [Game Rules](#game-rules)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Controls](#controls)
-- [Screenshots](#screenshots)
-
----
-
 ## 📖 About
 
 2048 is a sliding block puzzle game where the objective is to combine numbered tiles to create a tile with the number **2048**. This implementation was created as a learning project to practice DOM manipulation, game logic, and responsive design.
@@ -64,22 +50,6 @@ cd 2048-game
 open index.html
 ```
 
-### Option 2: Download ZIP
-
-1. Download the project as a ZIP file
-2. Extract the files
-3. Open `index.html` in your web browser
-
-### Option 3: Live Preview
-
-Simply open the `index.html` file in any modern web browser:
-- Google Chrome
-- Mozilla Firefox
-- Safari
-- Microsoft Edge
-
-**No server or build process required!**
-
 ---
 
 ## 📜 Game Rules
@@ -109,15 +79,6 @@ Combine tiles with the same number until you create a tile with the value **2048
 | **CSS3** | Styling and responsive design |
 | **JavaScript (ES6)** | Game logic and DOM manipulation |
 | **localStorage** | Persistent best score storage |
-
-### Why Vanilla JavaScript?
-
-This project intentionally uses **no frameworks or libraries** to demonstrate:
-- Core JavaScript fundamentals
-- DOM manipulation techniques
-- Algorithm implementation
-- Event handling
-- State management
 
 ---
 
@@ -167,40 +128,6 @@ This project intentionally uses **no frameworks or libraries** to demonstrate:
 
 ---
 
-## 🖼️ Screenshots
-
-### Game Start
-The game begins with two random tiles (2 or 4) placed on the board.
-
-### During Gameplay
-Players combine tiles by moving them in any direction. When two tiles with the same number touch, they merge.
-
-### Victory Screen
-Appears when the player successfully creates a 2048 tile.
-
-### Game Over
-Displayed when no more moves are possible.
-
----
-
-## 🎨 Color Scheme
-
-Each tile value has a unique color:
-
-- **2**: `#eee4da` (Light beige)
-- **4**: `#ede0c8` (Tan)
-- **8**: `#f2b179` (Orange)
-- **16**: `#f59563` (Dark orange)
-- **32**: `#f67c5f` (Red-orange)
-- **64**: `#f65e3b` (Red)
-- **128**: `#edcf72` (Yellow)
-- **256**: `#edcc61` (Gold)
-- **512**: `#edc850` (Bright gold)
-- **1024**: `#edc53f` (Deep gold)
-- **2048**: `#edc22e` (Winner gold)
-
----
-
 ## 🧠 Algorithm Explanation
 
 ### Movement Logic
@@ -219,28 +146,6 @@ The core of the game is the `slide()` function, which:
 
 ---
 
-## 🐛 Known Issues
-
-- None currently! 🎉
-
----
-
-## 🔮 Future Enhancements
-
-Possible improvements for future versions:
-
-- [ ] Smooth tile animations
-- [ ] Touch controls for mobile devices
-- [ ] Undo move functionality
-- [ ] Different grid sizes (3x3, 5x5)
-- [ ] Difficulty levels
-- [ ] Sound effects
-- [ ] Leaderboard system
-- [ ] Save/load game state
-- [ ] Dark mode toggle
-
----
-
 ## 📝 Development Notes
 
 ### Key Learning Points
@@ -251,37 +156,6 @@ Possible improvements for future versions:
 4. **Algorithm design**: Implementing the slide-and-merge logic
 5. **State management**: Tracking game state without a framework
 6. **localStorage**: Persisting data between sessions
-
----
-
-## 👨‍💻 Author
-
-Created as a learning project to practice vanilla JavaScript game development.
-
----
-
-## 📄 License
-
-This project is open source and available for educational purposes.
-
----
-
-## 🙏 Acknowledgments
-
-- Original 2048 game by Gabriele Cirulli
-- Inspired by the classic puzzle game concept
-- Built following web development best practices
-
----
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Game Rules](#game-rules) section
-2. Verify your browser supports ES6 JavaScript
-3. Ensure JavaScript is enabled in your browser
-4. Try clearing your browser cache
 
 ---
 
