@@ -297,6 +297,21 @@ function renderBoardAnimated(previousBoard, newBoard, direction)
 	}, 150);
 }
 
+function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find the new position of a tile
+{
+	for (let row = 0; row < GRID_SIZE; row++)
+	{
+	for (let col = 0; col < GRID_SIZE; col++)
+		{
+			if (newBoard[row][col] === value)
+			{
+				return { row, col };
+			}
+		}
+	}
+	return (null);
+}
+
 //----------------------------------------------------------------------------------//
 
 // MOVEMENT LOGIC //
