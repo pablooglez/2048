@@ -14,7 +14,6 @@ const GRID_SIZE = 4;
 
 // GLOBAL VARIABLES FOR ANIMATIONS //
 let isAnimating = false;
-let nextTileId = 0;
 
 // References to DOM elements //
 const scoreDisplay = document.getElementById('score');
@@ -46,8 +45,8 @@ function newGame()
 
 	hideGameMessage();	// Hide game over message
 
-	addRandomTile();	// Add 2 starting tokens
-	addRandomTile();
+	addRandomTile(false);	// Add 2 starting tokens without animation
+	addRandomTile(false);
 
 	renderBoard();	// Render board
 }
@@ -79,6 +78,8 @@ document.addEventListener('keydown', handleKeyPress);	// Arrow keys
 
 function handleKeyPress(event)	// event --> keyboard event
 {
+	if (isAnimating) return; // Prevent moves during animation
+	
 	if (event.key == 'ArrowUp')
 	{
 		event.preventDefault();
@@ -162,7 +163,7 @@ document.addEventListener('DOMContentLoaded', init_game);
 
 // TILE GENERATION //
 
-function addRandomTile()	// Add a random tile (2 or 4) to an empty cell
+function addRandomTile(animate = true)	// Add a random tile (2 or 4) to an empty cell
 {
 	const emptyCells = getEmptyCells();
 
@@ -183,9 +184,7 @@ function addRandomTile()	// Add a random tile (2 or 4) to an empty cell
 	board[row][col] = value;
 
 	// Create the tile with appearance animation
-	setTimeout(() => {
-		createTileElement(value, row, col, true);
-	}, 50);
+	createTileElement(value, row, col, animate ? 'new' : '');
 
 	return (true);
 }
@@ -223,29 +222,32 @@ function renderBoard() // Render all tiles on the board
 			
 			if (value !== 0)	// Only render if there's a tile
 			{
-				createTileElement(value, row, col);
+				createTileElement(value, row, col, '');
 			}
 		}
 	}
 }
 
-function createTileElement(value, row, col, isNew = false)	// Create a tile element visually
+function createTileElement(value, row, col, animationType = '')	// Create a tile element visually
 {
 	// Create the tile div
 	const tile = document.createElement('div');
 	tile.classList.add('tile');
 	tile.classList.add(`tile-${value}`);
 	tile.textContent = value;
-	tile.setAttribute('data-tile-id', nextTileId++);
 	
 	// Calculate position (each cell is 90px: 80px + 10px margin)
 	const position = getTilePosition(row, col);
 	tile.style.left = position.x + 'px';
 	tile.style.top = position.y + 'px';
 
-	if (isNew)	// Animation for new tiles
+	if (animationType === 'new')	// Animation for new tiles
 	{
 		tile.classList.add('tile-new');
+	}
+	else if (animationType === 'merged')	// Animation for merged tiles
+	{
+		tile.classList.add('tile-merged');
 	}
 	
 	// Add to container
@@ -265,76 +267,58 @@ function getTilePosition(row, col)	// Calculate pixel position of a tile
 	return { x: x, y: y };
 }
 
-/*function renderBoardAnimated(previousBoard, newBoard, direction)
-{
-	const existingTiles = new Map();	// Create a map of existing tiles
-
-	const tiles = tileContainer.querySelectorAll('.tile');
-
-	tiles.forEach(tile => {
-		const id = tile.getAttribute('data-tile-id');
-		existingTiles.set(id, tile);
-	});
-
-	for (let row = 0; row < GRID_SIZE; row++)	// Animate existing tiles to their new positions
-		{
-			for (let col = 0; col < GRID_SIZE; col++)
-			{
-				const oldValue = previousBoard[row][col];
-				const newValue = newBoard[row][col];
-
-				if (oldValue !== 0)
-				{
-					const newPosition = findTileNewPosition(oldValue, row, col, newBoard, direction);	// Find where this tile ended
-
-					if (newPosition)
-					{
-						animateTileMovement(row, col, newPosition.row, newPosition.col, existingTiles);
-					}
-				}
-			}
-		}
-
-		//After the animations, render the final state.
-		setTimeout(() => {
-		renderBoard();
-		isAnimating = false;
-	}, 150);
-}*/
-
-/*function findTileNewPosition(value, oldRow, oldCol, newBoard, direction)	// Find the new position of a tile
-{
-	for (let row = 0; row < GRID_SIZE; row++)
-	{
-	for (let col = 0; col < GRID_SIZE; col++)
-		{
-			if (newBoard[row][col] === value)
-			{
-				return { row, col };
-			}
-		}
-	}
-	return (null);
-}*/
-
-/*function animateTileMovement(fromRow, fromCol, toRow, toCol, existingTiles)	// Animate tile movement
-{
-	const fromPos = getTilePosition(fromRow, fromCol);
-	const toPos = getTilePosition(toRow, toCol);
-
-	// Find the corresponding tile and animate it
-	existingTiles.forEach(tile => {
-		const currentLeft = parseInt(tile.style.left);
-		const currentTop = parseInt(tile.style.top);
-
-		if (currentLeft === fromPos.x && currentTop === fromPos.y)
-		{
-			tile.style.transition = 'all 0.15s ease-in-out';
+// Render board with animations
+function renderBoardAnimated(movements, mergedCells) {
+	isAnimating = true;
+	
+	// Clear all tiles
+	tileContainer.innerHTML = '';
+	
+	// Create tiles for animation
+	movements.forEach(move => {
+		if (move.fromValue !== 0) {
+			const tile = document.createElement('div');
+			tile.classList.add('tile', `tile-${move.fromValue}`);
+			tile.textContent = move.fromValue;
+			
+			// Start position
+			const fromPos = getTilePosition(move.fromRow, move.fromCol);
+			tile.style.left = fromPos.x + 'px';
+			tile.style.top = fromPos.y + 'px';
+			
+			tileContainer.appendChild(tile);
+			
+			// Force browser to calculate position before animating
+			tile.offsetHeight;
+			
+			// Animate to end position
+			const toPos = getTilePosition(move.toRow, move.toCol);
 			tile.style.left = toPos.x + 'px';
 			tile.style.top = toPos.y + 'px';
 		}
 	});
-}*/
+	
+	// After movement animation, show merged tiles
+	setTimeout(() => {
+		tileContainer.innerHTML = '';
+		
+		// Render final board state
+		for (let row = 0; row < GRID_SIZE; row++) {
+			for (let col = 0; col < GRID_SIZE; col++) {
+				const value = board[row][col];
+				if (value !== 0) {
+					// Check if this position had a merge
+					const wasMerged = mergedCells.some(cell => 
+						cell.row === row && cell.col === col
+					);
+					createTileElement(value, row, col, wasMerged ? 'merged' : '');
+				}
+			}
+		}
+		
+		isAnimating = false;
+	}, 150);
+}
 
 //----------------------------------------------------------------------------------//
 
@@ -344,129 +328,268 @@ function move(direction)	// Main function to handle movement
 {
 	if (isAnimating) return;
 
+	const previousBoard = JSON.parse(JSON.stringify(board));
 	let moved = false;
-	let newBoard = JSON.parse(JSON.stringify(board));	// Deep copy of the board
+	let movements = [];
+	let mergedCells = [];
 	
 	if (direction === 'left')
 	{
 		for (let row = 0; row < GRID_SIZE; row++)
 		{
-			let newRow = slide(board[row]);
-			newBoard[row] = newRow.row;
-			if (newRow.moved) moved = true;
+			const result = slideRow(row, 'left');
+			if (result.moved) {
+				moved = true;
+				movements = movements.concat(result.movements);
+				mergedCells = mergedCells.concat(result.mergedCells);
+			}
 		}
 	}
 	else if (direction === 'right')
 	{
 		for (let row = 0; row < GRID_SIZE; row++)
 		{
-			let reversedRow = board[row].slice().reverse();
-			let newRow = slide(reversedRow);
-			newBoard[row] = newRow.row.reverse();
-			if (newRow.moved) moved = true;
+			const result = slideRow(row, 'right');
+			if (result.moved) {
+				moved = true;
+				movements = movements.concat(result.movements);
+				mergedCells = mergedCells.concat(result.mergedCells);
+			}
 		}
 	}
 	else if (direction === 'up')
 	{
 		for (let col = 0; col < GRID_SIZE; col++)
 		{
-			let column = [];
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				column.push(board[row][col]);
+			const result = slideColumn(col, 'up');
+			if (result.moved) {
+				moved = true;
+				movements = movements.concat(result.movements);
+				mergedCells = mergedCells.concat(result.mergedCells);
 			}
-			let newColumn = slide(column);
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				newBoard[row][col] = newColumn.row[row];
-			}
-			if (newColumn.moved) moved = true;
 		}
 	}
 	else if (direction === 'down')
 	{
 		for (let col = 0; col < GRID_SIZE; col++)
 		{
-			let column = [];
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				column.push(board[row][col]);
+			const result = slideColumn(col, 'down');
+			if (result.moved) {
+				moved = true;
+				movements = movements.concat(result.movements);
+				mergedCells = mergedCells.concat(result.mergedCells);
 			}
-			
-			let reversedColumn = column.reverse();
-			let newColumn = slide(reversedColumn);
-			let finalColumn = newColumn.row.reverse();
-			
-			for (let row = 0; row < GRID_SIZE; row++)
-			{
-				newBoard[row][col] = finalColumn[row];
-			}
-			
-			if (newColumn.moved) moved = true;
 		}
 	}
 
 	if (moved)	// If something moved, update the board
 	{
-		board = newBoard;
 		updateScore();
-		renderBoard();
 		
-		// Add new tile after a short delay
+		// Animate the movement
+		renderBoardAnimated(movements, mergedCells);
+		
+		// Add new tile after animation
 		setTimeout(() =>
 		{
-			addRandomTile();
+			addRandomTile(true);
 
-			if (checkWin())
-			{
-				showGameMessage('You Win!');
-			}
-			else if (checkGameOver())
-			{
-				showGameMessage('Game Over!');
-			}
-		}, 100);
+			// Check win/lose conditions
+			setTimeout(() => {
+				if (checkWin())
+				{
+					showGameMessage('You Win!');
+				}
+				else if (checkGameOver())
+				{
+					showGameMessage('Game Over!');
+				}
+			}, 200);
+		}, 200);
 	}
 }
 
-function slide(row)	// Slide and merge a single row/column
-{
-	let arr = row.filter(val => val !== 0);	// Remove zeros
+// Slide a row left or right
+function slideRow(row, direction) {
+	const movements = [];
+	const mergedCells = [];
+	const oldRow = [...board[row]];
+	let newRow = [];
 	let moved = false;
-
-	for (let i = 0; i < arr.length - 1; i++)	// Merge equal adjacent tiles
-	{
-		if (arr[i] === arr[i + 1])
-		{
-			arr[i] *= 2;		// Double the value
-			score += arr[i];	// Add to score
-			arr[i + 1] = 0;		// Mark as merged
-			moved = true;
+	
+	if (direction === 'left') {
+		// Compact to the left
+		let writePos = 0;
+		for (let readPos = 0; readPos < GRID_SIZE; readPos++) {
+			if (oldRow[readPos] !== 0) {
+				// Check if can merge with previous
+				if (writePos > 0 && newRow[writePos - 1] === oldRow[readPos] && 
+					!mergedCells.some(c => c.row === row && c.col === writePos - 1)) {
+					// Merge
+					newRow[writePos - 1] *= 2;
+					score += newRow[writePos - 1];
+					mergedCells.push({row, col: writePos - 1});
+					movements.push({
+						fromRow: row, fromCol: readPos,
+						toRow: row, toCol: writePos - 1,
+						fromValue: oldRow[readPos]
+					});
+					moved = true;
+				} else {
+					// Move to writePos
+					newRow[writePos] = oldRow[readPos];
+					if (readPos !== writePos) {
+						movements.push({
+							fromRow: row, fromCol: readPos,
+							toRow: row, toCol: writePos,
+							fromValue: oldRow[readPos]
+						});
+						moved = true;
+					}
+					writePos++;
+				}
+			}
+		}
+		// Fill rest with zeros
+		while (newRow.length < GRID_SIZE) {
+			newRow.push(0);
+		}
+	} else { // right
+		// Compact to the right
+		let writePos = GRID_SIZE - 1;
+		for (let readPos = GRID_SIZE - 1; readPos >= 0; readPos--) {
+			if (oldRow[readPos] !== 0) {
+				// Check if can merge with previous
+				if (writePos < GRID_SIZE - 1 && newRow[writePos + 1] === oldRow[readPos] && 
+					!mergedCells.some(c => c.row === row && c.col === writePos + 1)) {
+					// Merge
+					newRow[writePos + 1] *= 2;
+					score += newRow[writePos + 1];
+					mergedCells.push({row, col: writePos + 1});
+					movements.push({
+						fromRow: row, fromCol: readPos,
+						toRow: row, toCol: writePos + 1,
+						fromValue: oldRow[readPos]
+					});
+					moved = true;
+				} else {
+					// Move to writePos
+					newRow[writePos] = oldRow[readPos];
+					if (readPos !== writePos) {
+						movements.push({
+							fromRow: row, fromCol: readPos,
+							toRow: row, toCol: writePos,
+							fromValue: oldRow[readPos]
+						});
+						moved = true;
+					}
+					writePos--;
+				}
+			}
+		}
+		// Fill rest with zeros
+		while (newRow.length < GRID_SIZE) {
+			newRow.unshift(0);
 		}
 	}
+	
+	board[row] = newRow;
+	return {moved, movements, mergedCells};
+}
 
-	arr = arr.filter(val => val !== 0);	// Remove zeros again after merging
-
-	if (arr.length !== row.filter(val => val !== 0).length)	// Check if the row changed
-	{
-		moved = true;
+// Slide a column up or down
+function slideColumn(col, direction) {
+	const movements = [];
+	const mergedCells = [];
+	const oldCol = [];
+	for (let row = 0; row < GRID_SIZE; row++) {
+		oldCol.push(board[row][col]);
 	}
-
-	while (arr.length < GRID_SIZE)	// Fill with zeros to maintain size 4
-	{
-		arr.push(0);
-	}
-
-	for (let i = 0; i < GRID_SIZE; i++)	// Check if the row actually changed
-	{
-		if (row[i] !== arr[i])
-		{
-			moved = true;
-			break;
+	let newCol = [];
+	let moved = false;
+	
+	if (direction === 'up') {
+		// Compact upward
+		let writePos = 0;
+		for (let readPos = 0; readPos < GRID_SIZE; readPos++) {
+			if (oldCol[readPos] !== 0) {
+				// Check if can merge with previous
+				if (writePos > 0 && newCol[writePos - 1] === oldCol[readPos] && 
+					!mergedCells.some(c => c.row === writePos - 1 && c.col === col)) {
+					// Merge
+					newCol[writePos - 1] *= 2;
+					score += newCol[writePos - 1];
+					mergedCells.push({row: writePos - 1, col});
+					movements.push({
+						fromRow: readPos, fromCol: col,
+						toRow: writePos - 1, toCol: col,
+						fromValue: oldCol[readPos]
+					});
+					moved = true;
+				} else {
+					// Move to writePos
+					newCol[writePos] = oldCol[readPos];
+					if (readPos !== writePos) {
+						movements.push({
+							fromRow: readPos, fromCol: col,
+							toRow: writePos, toCol: col,
+							fromValue: oldCol[readPos]
+						});
+						moved = true;
+					}
+					writePos++;
+				}
+			}
+		}
+		// Fill rest with zeros
+		while (newCol.length < GRID_SIZE) {
+			newCol.push(0);
+		}
+	} else { // down
+		// Compact downward
+		let writePos = GRID_SIZE - 1;
+		for (let readPos = GRID_SIZE - 1; readPos >= 0; readPos--) {
+			if (oldCol[readPos] !== 0) {
+				// Check if can merge with previous
+				if (writePos < GRID_SIZE - 1 && newCol[writePos + 1] === oldCol[readPos] && 
+					!mergedCells.some(c => c.row === writePos + 1 && c.col === col)) {
+					// Merge
+					newCol[writePos + 1] *= 2;
+					score += newCol[writePos + 1];
+					mergedCells.push({row: writePos + 1, col});
+					movements.push({
+						fromRow: readPos, fromCol: col,
+						toRow: writePos + 1, toCol: col,
+						fromValue: oldCol[readPos]
+					});
+					moved = true;
+				} else {
+					// Move to writePos
+					newCol[writePos] = oldCol[readPos];
+					if (readPos !== writePos) {
+						movements.push({
+							fromRow: readPos, fromCol: col,
+							toRow: writePos, toCol: col,
+							fromValue: oldCol[readPos]
+						});
+						moved = true;
+					}
+					writePos--;
+				}
+			}
+		}
+		// Fill rest with zeros
+		while (newCol.length < GRID_SIZE) {
+			newCol.unshift(0);
 		}
 	}
-
-	return { row: arr, moved: moved };
+	
+	// Update board column
+	for (let row = 0; row < GRID_SIZE; row++) {
+		board[row][col] = newCol[row];
+	}
+	
+	return {moved, movements, mergedCells};
 }
 
 //----------------------------------------------------------------------------------//
