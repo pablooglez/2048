@@ -18,139 +18,139 @@ body {
 }
 
 .heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .title {
-  font-size: 60px;
-  font-weight: bold;
-  color: #7bed9f;
-  margin: 0;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+	font-size: 60px;
+	font-weight: bold;
+	color: #7bed9f;
+	margin: 0;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .scores-container {
-  display: flex;
-  gap: 10px;
+	display: flex;
+	gap: 10px;
 }
 
 .score-container {
-  background: linear-gradient(135deg, #2ed573 0%, #1abc9c 100%);
-  border-radius: 6px;
-  padding: 10px 20px;
-  text-align: center;
-  min-width: 30px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	background: linear-gradient(135deg, #2ed573 0%, #1abc9c 100%);
+	border-radius: 6px;
+	padding: 10px 20px;
+	text-align: center;
+	min-width: 30px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .score-title {
-  font-size: 14px;
-  color: #f1f2f6;
-  margin-bottom: 5px;
-  font-weight: bold;
+	font-size: 14px;
+	color: #f1f2f6;
+	margin-bottom: 5px;
+	font-weight: bold;
 }
 
 #score, #best-score {
-  color: #ffffff;
-  font-size: 20px;
-  font-weight: bold;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .above-game {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0 10px 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px 0 10px 0;
 }
 
 .game-intro {
-  margin: 0;
-  font-size: 16px;
-  color: #d2ddd5;
+	margin: 0;
+	font-size: 16px;
+	color: #d2ddd5;
 }
 
 .restart-button, .retry-button {
-  background: linear-gradient(135deg, #7bed9f 0%, #70a1ff 100%);
-  color: #1e3a2f;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 18px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	background: linear-gradient(135deg, #7bed9f 0%, #70a1ff 100%);
+	color: #1e3a2f;
+	border: none;
+	border-radius: 6px;
+	padding: 10px 18px;
+	font-size: 16px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: transform 0.2s, box-shadow 0.2s;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .restart-button:hover, .retry-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(123, 237, 159, 0.5);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(123, 237, 159, 0.5);
 }
 
 .grid-container {
-  background: #0f2620;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 20px;
-  position: relative;
+	background: #0f2620;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 20px;
+	position: relative;
 }
 
 .grid-row {
-  display: flex;
+	display: flex;
 }
 
 .grid-cell {
-  width: 80px;
-  height: 80px;
-  background: #1e3a2f;
-  border-radius: 6px;
-  margin: 5px;
+	width: 80px;
+	height: 80px;
+	background: #1e3a2f;
+	border-radius: 6px;
+	margin: 5px;
 }
 
 .tile-container {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
 }
 
 .game-message {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(30, 58, 47, 0.95);
-  border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 10;
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(30, 58, 47, 0.95);
+	border-radius: 6px;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	z-index: 10;
 }
 
 .game-message p {
-  font-size: 40px;
-  color: #7bed9f;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+	font-size: 40px;
+	color: #7bed9f;
+	margin-bottom: 20px;
+	font-weight: bold;
+	text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .game-explanation {
-  margin-top: 30px;
-  font-size: 15px;
-  color: #d2ddd5;
-  text-align: center;
+	margin-top: 30px;
+	font-size: 15px;
+	color: #d2ddd5;
+	text-align: center;
 }
 
 .important {
-  color: #7bed9f;
-  font-weight: bold;
+	color: #7bed9f;
+	font-weight: bold;
 }
 
 /* Tile Styles - Forest Theme */
@@ -166,6 +166,45 @@ body {
 	border-radius: 6px;
 	transition: all 0.15s ease-in-out;
 	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+	z-index: 1;
+}
+
+/* Animation for new tiles appearing */
+@keyframes appear {
+	0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.tile-new {
+	animation: appear 0.2s ease-out;
+	z-index: 2;
+}
+
+/* Animation for merged tiles */
+@keyframes merge {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.2);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.tile-merged {
+	animation: merge 0.2s ease-out;
+	z-index: 3;
 }
 
 /* Tile Colors - Forest Green Gradient */
