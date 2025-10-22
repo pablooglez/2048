@@ -1,5 +1,7 @@
 # 🎮 2048 Game
 
+Play now 👉 [Click here to play!](https://pablooglez.github.io/2048/)
+
 A browser-based implementation of the classic 2048 puzzle game built with vanilla JavaScript, HTML, and CSS.
 
 ![2048 Game](https://img.shields.io/badge/Status-Complete-success)
