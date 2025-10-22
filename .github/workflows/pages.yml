@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main  # Cambia a 'master' si usas esa rama
+permissions:
+  id-token: write
+  pages: write
+  actions: read
 
 jobs:
   build-and-deploy:
